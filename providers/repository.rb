@@ -1,5 +1,5 @@
 action :add do
-  unless ::File.exists?("/etc/apt/sources.list.d/#{new_resource.repo_name}-source.list")
+  # unless ::File.exists?("/etc/apt/sources.list.d/#{new_resource.repo_name}-source.list")
     Chef::Log.info "Adding #{new_resource.repo_name} repository to /etc/apt/sources.list.d/#{new_resource.repo_name}-source.list"
     # add key
     if new_resource.key && new_resource.keyserver
@@ -37,7 +37,7 @@ action :add do
     end
     e.run_action(:run)
     new_resource.updated_by_last_action(true)
-  end
+  # end
 end
 
 action :remove do
