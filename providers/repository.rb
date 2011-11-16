@@ -17,18 +17,33 @@ action :add do
       end
     end
     # build our listing
-    repository = "deb"
-    repository = "deb-src" if new_resource.deb_src
-    repository = "# Created by the Chef apt_repository LWRP\n" + repository
-    repository += " #{new_resource.uri}"
-    repository += " #{new_resource.distribution}"
-    new_resource.components.each {|component| repository += " #{component}"}
+    repositories = new_resource.distributions.map do |distribution|
+      "#{new_resource.uri} #{distribution}"
+    end
+
+    types = ["deb"]
+    types << "deb-src" if new_resource.include_src
+
+    repositories_with_packages = []
+    types.each do |type|
+      repositories.each do |repository|
+        repositories_with_packages << "#{type} #{repository}"
+      end
+    end
+
+    repositories_with_components = []
+    new_resource.components.each do |component|
+      repositories_with_packages.each do |repository|
+        repositories_with_components << "#{repository} #{component}"
+      end
+    end
+
     # write out the file, replace it if it already exists
     file "/etc/apt/sources.list.d/#{new_resource.repo_name}-source.list" do
       owner "root"
       group "root"
       mode 0644
-      content repository + "\n"
+      content repositories_with_components.join("\n") + "\n"
       action :create
     end
     e = execute "update package index" do
