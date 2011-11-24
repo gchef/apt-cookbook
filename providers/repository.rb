@@ -20,6 +20,6 @@ action :remove do
 end
 
 def load_current_resource
-  self.extend(Apt::Key)
-  self.extend(Apt::Repository)
+  extend Apt::Key
+  extend Apt::Repository
 end
