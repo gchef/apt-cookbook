@@ -5,7 +5,7 @@ action :add do
     skip = false
   end
 
-  if !skip || !::File.exists?("/etc/apt/sources.list.d/#{new_resource.repo_name}-source.list")
+  if !skip && !::File.exists?("/etc/apt/sources.list.d/#{new_resource.repo_name}-source.list")
     Chef::Log.info "Adding #{new_resource.repo_name} repository to /etc/apt/sources.list.d/#{new_resource.repo_name}-source.list"
     add_key!
     create_or_update_repository!
