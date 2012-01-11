@@ -64,7 +64,7 @@ Author:: Matt Ray (<matt@opscode.com>)
 Author:: Gerhard Lazu (<gerhard@lazu.co.uk>)
 
 Copyright 2009-2011 Opscode, Inc.
-Copyright 2011 Gerhard Lazu
+Copyright 2012 Gerhard Lazu
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
