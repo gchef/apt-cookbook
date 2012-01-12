@@ -17,11 +17,7 @@
 # limitations under the License.
 #
 
-if Chef::Util.respond_to?(:wan_up?)
-  execute "apt-get update" if Chef::Util.wan_up?
-else
-  execute "apt-get update"
-end
+execute "apt-get update" if Chef::Extensions.wan_up?
 
 %w{/var/cache/local /var/cache/local/preseeding}.each do |dirname|
   directory dirname do

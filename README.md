@@ -3,6 +3,8 @@ Description
 
 Configures various APT components on Debian-like systems. Also includes a LWRP.
 
+Requires the chef-extensions gem.
+
 Recipes
 =======
 
