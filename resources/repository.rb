@@ -7,3 +7,8 @@ attribute :uri,            :kind_of => String
 attribute :sources,        :kind_of => Array,   :default => ["deb"]
 attribute :distributions,  :kind_of => Array,   :default => [node[:lsb][:codename]]
 attribute :components,     :kind_of => Array,   :default => ["main"]
+
+def initialize(*args)
+  super
+  @action = :add
+end
