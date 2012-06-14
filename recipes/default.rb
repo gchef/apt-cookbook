@@ -17,7 +17,11 @@
 # limitations under the License.
 #
 
-execute "apt-get update" if Chef::Extensions.wan_up?
+
+if Chef::Extensions.wan_up?
+  chef_apt_update = ENV.fetch('CHEF_APT_UPDATE') { '' }
+  execute "apt-get update" unless chef_apt_update.index("disable")
+end
 
 %w{/var/cache/local /var/cache/local/preseeding}.each do |dirname|
   directory dirname do
