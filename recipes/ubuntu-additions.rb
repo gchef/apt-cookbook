@@ -1,16 +1,22 @@
-apt_repository "ubuntu-additions" do
-  uri "http://us.archive.ubuntu.com/ubuntu/"
+lsb_codename = node[:lsb][:codename]
+ubuntu_additions_sources = node[:apt][:ubuntu][:additions][:sources].map { |source| "#{lsb_codename}-#{source}" }
+
+apt_repository "additions" do
+  uri node[:apt][:ubuntu][:additions][:uri]
   sources %w[deb deb-src]
-  distributions [
-    node[:lsb][:codename],
-    "#{node[:lsb][:codename]}-updates",
-    "#{node[:lsb][:codename]}-backports"
-  ]
-  components %w[main universe multiverse restricted]
-  action :add
+  distributions ubuntu_additions_sources
+  components node[:apt][:ubuntu][:additions][:components]
 end
 
-# Clean-up
+
+
+### Clean-up
+#
+
+file "/etc/apt/sources.list.d/ubuntu-additions-source.list" do
+  action :delete
+end
+
 file "/etc/apt/sources.list.d/ubuntu_additions-source.list" do
   action :delete
 end
