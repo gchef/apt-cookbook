@@ -1,4 +1,6 @@
-actions :add
+actions :add,
+        :hold,
+        :unhold
 
 attribute :package_name,  :kind_of => String, :name_attribute => true
 attribute :version,       :kind_of => String

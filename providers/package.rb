@@ -10,10 +10,23 @@ action :add do
     only_if "[ $(dpkg -l #{new_resource.name} 2>&1 | grep #{new_resource.version} | grep -c '#{package_status}[ic] ') = 0 ]"
   end
 
+  # Legacy, calling the hold/unhold action is the recommended way
+  #
   if new_resource.freeze
-    bash "freeze #{new_resource.name} package" do
-      code "echo #{new_resource.name} hold | dpkg --set-selections"
-      only_if "[ $(dpkg --get-selections | grep '#{new_resource.name}' | grep -c 'hold') = 0 ] "
-    end
+    freeze
+  else
+    unfreeze
   end
+end
+
+action :hold do
+  hold # defined in Apt::SetSelections
+end
+
+action :unhold do
+  unhold # defined in Apt::SetSelections
+end
+
+def load_current_resource
+  extend Apt::SetSelections
 end
