@@ -3,7 +3,7 @@ module Apt
     def create_or_update_repository!
       all_repositories = []
       new_resource.sources.each do |source|
-        new_resource.distributions.each do |distribution|
+        distributions.each do |distribution|
           all_repositories << (
             "#{source} " <<
             "#{new_resource.uri} " <<
@@ -31,5 +31,15 @@ module Apt
       e.run_action(:run)
       new_resource.updated_by_last_action(true)
     end
+
+    private
+
+      def distributions
+        if new_resource.distribution
+          [new_resource.distribution]
+        else
+          new_resource.distributions
+        end
+      end
   end
 end
