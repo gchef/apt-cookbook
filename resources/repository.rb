@@ -15,3 +15,7 @@ def initialize(*args)
   super
   @action = :add
 end
+
+def wan_up?
+  `ping -c 1 -W 1 google.com`.index(/1 (?:packets )?received/)
+end
