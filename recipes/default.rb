@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-wan_up = `ping -c 1 -W 1 google.com`.index(/1 (?:packets )?received/)
+wan_up = `ping -c 1 -W 1 8.8.8.8`.index(/1 (?:packets )?received/)
 
 if wan_up
   chef_apt_update = ENV.fetch('CHEF_APT_UPDATE') { '' }
