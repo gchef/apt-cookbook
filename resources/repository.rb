@@ -17,5 +17,5 @@ def initialize(*args)
 end
 
 def wan_up?
-  `ping -c 1 -W 1 8.8.8.8`.index(/1 (?:packets )?received/)
+  `host -W 1 google.com`.index(/has address/)
 end
