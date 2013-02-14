@@ -8,7 +8,7 @@ action :add do
     version new_resource.version
     options package_options
     only_if "[ $(dpkg -l #{new_resource.name} 2>&1 | grep #{new_resource.version}.* | grep -c '^#{package_status}[ic] ') = 0 ]"
-    notifies :restart, resources(:service => new_resource.service)
+    notifies :restart, resources(:service => new_resource.service) if new_resource.service
   end
 
   # Legacy, calling the hold/unhold action is the recommended way
